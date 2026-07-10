@@ -22,10 +22,11 @@
             transition: transform 0.3s ease;
         }
 
+        /* Envelope Gigante */
         .envelope-wrapper {
             position: relative;
-            width: 630px;  /* Tamanho ampliado */
-            height: 430px; /* Tamanho ampliado */
+            width: 800px;  /* Ampliado */
+            height: 550px; /* Ampliado */
         }
 
         /* Esconde o controle do clique */
@@ -39,22 +40,22 @@
             width: 100%;
             height: 100%;
             background-color: #260c11;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            border-radius: 6px;
+            box-shadow: 0 35px 60px rgba(0,0,0,0.35);
+            border-radius: 8px;
         }
 
         /* Cartão do convite */
         .card {
             position: absolute;
             background: #ffffff;
-            width: 550px; /* Tamanho do papel interno ampliado */
-            height: 380px;
-            top: 25px;
-            left: 40px;
+            width: 700px;  /* Papel interno gigante */
+            height: 480px;
+            top: 35px;
+            left: 50px;
             z-index: 2;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            padding: 45px 30px;
+            padding: 60px 40px;
             box-sizing: border-box;
             border: 2px solid #d4af37;
             border-radius: 4px;
@@ -62,17 +63,17 @@
 
         .card h1 {
             color: #4a1d23;
-            font-size: 50px; /* Fonte aumentada */
-            margin-bottom: 20px;
+            font-size: 65px; /* Fonte super legível */
+            margin-bottom: 25px;
             font-style: italic;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
         }
 
         .card p {
             color: #555;
-            font-size: 20px; /* Fonte aumentada */
+            font-size: 24px;
             line-height: 1.8;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         /* Abas frontais */
@@ -111,26 +112,28 @@
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Fita Cinza Claro */
+        /* Fita Cinza Claro Centralizada */
         .ribbon {
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 140px; /* Posicionamento ajustado para o novo tamanho */
-            width: 55px; /* Fita mais larga */
+            left: 50%;
+            margin-left: -35px; /* Metade da largura para centralizar perfeito */
+            width: 70px;
             background: linear-gradient(to right, #dcdcdc, #f5f5f5, #dcdcdc);
             z-index: 5;
-            box-shadow: 3px 0 8px rgba(0,0,0,0.3), -2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3), -3px 0 8px rgba(0,0,0,0.1);
             transition: opacity 0.4s, transform 0.4s;
         }
 
-        /* Flores Secas */
+        /* Flores Secas Centralizadas */
         .flowers {
             position: absolute;
-            top: 130px;
-            left: 100px;
-            width: 120px; /* Ramo botânico ampliado */
-            height: 180px;
+            top: 170px;
+            left: 50%;
+            margin-left: -75px; /* Metade da largura para centralizar */
+            width: 150px; 
+            height: 220px;
             z-index: 5;
             transition: opacity 0.4s, transform 0.4s;
             pointer-events: none;
@@ -139,17 +142,17 @@
         .flowers svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.4));
+            filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.4));
         }
 
-        /* Lacre de Cera */
+        /* Lacre de Cera Centralizado */
         .seal {
             position: absolute;
-            top: 235px; /* Ajustado verticalmente para alinhar à aba */
-            left: 167px; /* Centralizado sobre a fita */
+            top: 302px; /* Alinhado ao bico da aba */
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 110px; /* Lacre gigante e luxuoso */
-            height: 110px;
+            width: 130px; 
+            height: 130px;
             background: radial-gradient(circle at 30% 30%, #72222a, #3b0e14);
             border-radius: 50%;
             z-index: 6;
@@ -158,40 +161,54 @@
             align-items: center;
             color: #d4af37;
             font-family: 'Georgia', serif;
-            font-size: 34px; /* Monograma ampliado */
+            font-size: 42px; 
             font-style: italic;
             cursor: pointer;
-            box-shadow: 0 8px 12px rgba(0,0,0,0.5), inset 0 0 6px rgba(255,255,255,0.2);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.5), inset 0 0 8px rgba(255,255,255,0.2);
             transition: opacity 0.4s, transform 0.4s;
         }
 
-        /* Ações de animação */
+        /* === AÇÕES DE ANIMAÇÃO AO CLICAR === */
+        
         #open-envelope:checked ~ .envelope .flap {
             transform: rotateX(180deg);
             z-index: 1;
         }
 
+        /* Animação da Fita e das Flores (Somem suavemente) */
         #open-envelope:checked ~ .envelope .ribbon,
-        #open-envelope:checked ~ .envelope .flowers,
-        #open-envelope:checked ~ .envelope .seal {
+        #open-envelope:checked ~ .envelope .flowers {
             opacity: 0;
-            transform: translateY(-30px) scale(0.9);
+            transform: translateY(-40px);
             pointer-events: none;
         }
 
-        #open-envelope:checked ~ .envelope .card {
-            transform: translateY(-260px); /* Sobe proporcional ao novo tamanho */
+        /* Animação do Lacre (Mantém o translate X de centralização ao subir) */
+        #open-envelope:checked ~ .envelope .seal {
+            opacity: 0;
+            transform: translate(-50%, -90px) scale(0.9);
+            pointer-events: none;
         }
 
-        /* Ajuste automático para celulares */
+        /* Desliza o cartão gigante para fora */
+        #open-envelope:checked ~ .envelope .card {
+            transform: translateY(-360px); 
+        }
+
+        /* === RESPONSIVIDADE PARA CELULARES === */
+        @media (max-width: 900px) {
+            .scale-container {
+                transform: scale(0.8);
+            }
+        }
         @media (max-width: 700px) {
             .scale-container {
-                transform: scale(0.55);
+                transform: scale(0.45);
             }
         }
         @media (max-width: 400px) {
             .scale-container {
-                transform: scale(0.45);
+                transform: scale(0.38);
             }
         }
     </style>
@@ -208,8 +225,10 @@
                 <div class="front-bottom"></div>
                 <div class="flap"></div>
 
+                <!-- Fita Centralizada -->
                 <div class="ribbon"></div>
                 
+                <!-- Flores Secas -->
                 <div class="flowers">
                     <svg viewBox="0 0 100 150" fill="none" stroke="#bda077" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M50,140 Q40,90 60,30" />
@@ -223,13 +242,15 @@
                     </svg>
                 </div>
 
+                <!-- Lacre Clicável -->
                 <label for="open-envelope" class="seal">N&W</label>
                 
+                <!-- Convite Interno -->
                 <div class="card">
                     <h1>N & W</h1>
                     <p>Com muita alegria, convidamos você para celebrar conosco o nosso casamento.</p>
                     <p><strong>2028 | Aracaju - SE</strong></p>
-                    <p style="font-size: 14px; margin-top: 30px; color: #999;">(Toque no lacre novamente para fechar)</p>
+                    <p style="font-size: 16px; margin-top: 40px; color: #999;">(Toque no lacre novamente para fechar)</p>
                 </div>
             </div>
         </div>
