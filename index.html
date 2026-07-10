@@ -168,18 +168,24 @@
     background:rgba(0,0,0,0.06);
   }
 
-  /* dried sprigs peeking from behind the seal, tucked with the ribbon ends */
+  /* dried baby's-breath sprigs peeking from behind the seal, tucked with the ribbon ends */
   .sprig{
     position:absolute;
     top:50%; left:50%;
-    width:130px; height:130px;
-    margin:-65px 0 0 -65px;
+    width:220px; height:220px;
+    margin:-150px 0 0 -110px;
     z-index:6;
     pointer-events:none;
     transition:opacity 0.4s, transform 0.4s;
   }
-  .sprig.left{ transform:translateX(-38px) rotate(-14deg); }
-  .sprig.right{ transform:translateX(38px) rotate(14deg) scaleX(-1); }
+  .sprig img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+  }
+  .sprig.left{ transform:translateX(-16px) rotate(-8deg); }
+  .sprig.right{ transform:translateX(16px) rotate(8deg); }
 
   .seal{
     position:absolute;
@@ -192,9 +198,6 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    color:var(--gold-light);
-    font-family:'Parisienne', cursive;
-    font-size:34px;
     cursor:pointer;
     box-shadow:
       0 10px 18px rgba(0,0,0,0.5),
@@ -208,6 +211,12 @@
     inset:-6px;
     border-radius:50%;
     border:1px dashed rgba(233,214,171,0.5);
+  }
+  .seal img{
+    width:66%;
+    height:66%;
+    object-fit:contain;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));
   }
 
   /* ============ CARD (interior) — contains the actual invitation image ============ */
@@ -333,31 +342,15 @@
         <div class="ribbon"></div>
 
         <div class="sprig left">
-          <svg viewBox="0 0 100 150" fill="none" stroke="#a8a29a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
-            <path d="M50,140 Q40,90 60,30"/>
-            <path d="M54,105 Q70,95 80,75"/>
-            <path d="M47,75 Q30,65 20,45"/>
-            <path d="M57,55 Q75,45 85,25"/>
-            <circle cx="80" cy="75" r="3.5" fill="#c9a15a" stroke="none"/>
-            <circle cx="20" cy="45" r="3" fill="#c9a15a" stroke="none"/>
-            <circle cx="85" cy="25" r="3.5" fill="#c9a15a" stroke="none"/>
-            <circle cx="60" cy="30" r="4" fill="#c9a15a" stroke="none"/>
-          </svg>
+          <img src="sprig-left.png" alt="">
         </div>
         <div class="sprig right">
-          <svg viewBox="0 0 100 150" fill="none" stroke="#a8a29a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
-            <path d="M50,140 Q40,90 60,30"/>
-            <path d="M54,105 Q70,95 80,75"/>
-            <path d="M47,75 Q30,65 20,45"/>
-            <path d="M57,55 Q75,45 85,25"/>
-            <circle cx="80" cy="75" r="3.5" fill="#b3283a" stroke="none"/>
-            <circle cx="20" cy="45" r="3" fill="#b3283a" stroke="none"/>
-            <circle cx="85" cy="25" r="3.5" fill="#b3283a" stroke="none"/>
-            <circle cx="60" cy="30" r="4" fill="#b3283a" stroke="none"/>
-          </svg>
+          <img src="sprig-right.png" alt="">
         </div>
 
-        <label for="open-envelope" class="seal">N&amp;W</label>
+        <label for="open-envelope" class="seal">
+          <img src="seal-monogram-gold.png" alt="N&amp;W">
+        </label>
 
         <!-- ======= INTERIOR CARD: the actual invitation, unaltered ======= -->
         <div class="card">
