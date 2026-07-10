@@ -168,12 +168,15 @@
     background:rgba(0,0,0,0.06);
   }
 
-  /* single dried flower sprig, tucked diagonally behind the seal */
+/* single dried flower sprig, tucked diagonally behind the seal */
   .sprig{
     position:absolute;
     top:50%; left:50%;
-    width:190px; height:310px;
-    margin:-230px 0 0 -70px;
+    /* Tamanho reduzido (antes era 190px / 310px) */
+    width: 130px; 
+    height: 210px;
+    /* Margem ajustada para manter a posição correta atrás do lacre */
+    margin: -155px 0 0 -45px;
     z-index:6;
     pointer-events:none;
     transform:rotate(-32deg);
