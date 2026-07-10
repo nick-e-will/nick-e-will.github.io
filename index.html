@@ -283,48 +283,41 @@
     height:12px;
   }
 
-  /* ============ Botão de Confirmar Presença ============ */
+/* ============ Botão de Confirmar Presença (Circular) ============ */
   .rsvp-btn {
     position: absolute;
-    bottom: 40px; 
-    left: 50%;
-    transform: translateX(-50%);
+    /* Posição baseada nas proporções da imagem convite (1).jpg */
+    top: 63.5%; 
+    left: 39.5%; 
+    transform: translate(-50%, -50%);
     z-index: 10;
-    display: inline-flex;
+    
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
     
-    background: var(--paper);
-    color: var(--wine-2);
-    border: 1px solid var(--gold);
-    border-radius: 30px;
-    box-shadow: 0 6px 15px rgba(20, 3, 7, 0.25);
-    
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    /* Tamanho do círculo para cobrir a imagem de fundo perfeitamente */
+    width: 42px; 
+    height: 42px;
+    background-color: #691621; /* Cor equivalente ao círculo da sua imagem */
+    border-radius: 50%;
     text-decoration: none;
-    white-space: nowrap;
     
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease 0.3s, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
+  /* Efeito interativo quando passar o mouse por cima */
   .rsvp-btn:hover {
-    background: var(--cream);
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 8px 20px rgba(20, 3, 7, 0.35);
-    color: var(--wine-dark);
+    background-color: var(--rose-bright);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
   }
 
   .rsvp-btn svg {
-    width: 16px;
-    height: 16px;
-    color: var(--leaf);
+    width: 20px;
+    height: 20px;
   }
 
   /* ============ open state ============ */
