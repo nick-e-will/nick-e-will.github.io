@@ -168,14 +168,14 @@
     background:rgba(0,0,0,0.06);
   }
 
-/* single dried flower sprig, tucked diagonally behind the seal */
+  /* single dried flower sprig, tucked diagonally behind the seal */
   .sprig{
     position:absolute;
     top:50%; left:50%;
-    /* Tamanho reduzido (antes era 190px / 310px) */
+    /* Tamanho reduzido */
     width: 130px; 
     height: 210px;
-    /* Margem ajustada para manter a posição correta atrás do lacre */
+    /* Margem ajustada */
     margin: -155px 0 0 -45px;
     z-index:6;
     pointer-events:none;
@@ -223,7 +223,7 @@
   }
 
   /* ============ CARD (interior) — contains the actual invitation image ============ */
-    .card{
+  .card{
     position:absolute;
     width:560px;
     top:14px;
@@ -246,29 +246,27 @@
     height:auto;
   }
 
-  /* ============ close/back button (only visible once the envelope is open) ============ */
+  /* ============ close/back button ============ */
   .close-btn{
     position:absolute;
-    bottom:350px; 
-    left:22%;
-    /* O translate ajusta para o centro exato */
-    transform:translateX(-50%); 
+    top:15px;
+    left:15px;
     z-index:10;
     display:inline-flex;
     align-items:center;
     gap:6px;
     padding:6px 14px;
+    font-size:13px;
+    letter-spacing:1px;
     background:linear-gradient(135deg, var(--wine-2), var(--wine-dark));
     color:var(--gold-light);
     border:1px solid var(--gold);
     border-radius:30px;
     font-family:'Cormorant Garamond', serif;
-    font-size:13px;
-    letter-spacing:1px;
     text-transform:uppercase;
     text-decoration:none;
     cursor:pointer;
-    box-shadow:0 8px 18px rgba(20,3,7,0.35);
+    box-shadow:0 4px 10px rgba(20,3,7,0.3);
     opacity:0;
     pointer-events:none;
     transition:opacity 0.5s ease 0.3s, transform 0.3s ease;
@@ -276,11 +274,14 @@
   }
   
   .close-btn:hover{
-    /* Mantivemos a animação suave ao passar o mouse */
-    transform:translateX(-50%) translateY(-2px);
-    box-shadow:0 10px 22px rgba(20,3,7,0.45);
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(20,3,7,0.4);
   }
-  .close-btn svg{width:15px; height:15px;}
+  
+  .close-btn svg{
+    width:12px; 
+    height:12px;
+  }
 
   /* ============ Botão de Confirmar Presença ============ */
   .rsvp-btn {
@@ -350,7 +351,8 @@
     transform:translateY(-330px) scale(1.03);
     box-shadow:0 55px 90px rgba(20,3,7,0.5);
   }
-  #open-envelope:checked ~ .envelope .close-btn{
+  #open-envelope:checked ~ .envelope .close-btn,
+  #open-envelope:checked ~ .envelope .rsvp-btn {
     opacity:1;
     pointer-events:auto;
   }
@@ -394,28 +396,30 @@
           <img src="seal-monogram-gold.png" alt="N&amp;W">
         </label>
 
-        <!-- ======= INTERIOR CARD: the actual invitation, unaltered ======= -->
+        <!-- ======= INTERIOR CARD ======= -->
         <div class="card">
           <label for="open-envelope" class="close-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6"/>
             </svg>
-            Fechar envelope
+            Fechar
           </label>
+
           <img src="convite.jpg" alt="Convite de casamento de Nicole e Willamis">
+
           <!-- NOVO: Botão de WhatsApp (Ajuste o número no link abaixo) -->
-            <a href="https://wa.me/5500000000000?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              Confirmar Presença
-            </a>
-          </div>
+          <a href="https://wa.me/5500000000000?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Confirmar Presença
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="hint">Toque no lacre para abrir</div>
+  <div class="hint">Toque no lacre para abrir</div>
 
-  </body>
-  </html>
+</body>
+</html>
