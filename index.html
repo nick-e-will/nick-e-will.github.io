@@ -249,9 +249,11 @@
   /* ============ close/back button (only visible once the envelope is open) ============ */
   .close-btn{
     position:absolute;
-    top:-56px;
+    /* Mudamos de top: -56px para bottom: 30px */
+    bottom:30px; 
     left:50%;
-    transform:translateX(-50%);
+    /* O translate ajusta para o centro exato */
+    transform:translateX(-50%); 
     z-index:10;
     display:inline-flex;
     align-items:center;
@@ -273,7 +275,9 @@
     transition:opacity 0.5s ease 0.3s, transform 0.3s ease;
     white-space:nowrap;
   }
+  
   .close-btn:hover{
+    /* Mantivemos a animação suave ao passar o mouse */
     transform:translateX(-50%) translateY(-2px);
     box-shadow:0 10px 22px rgba(20,3,7,0.45);
   }
