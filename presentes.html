@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Presentes - N & W</title>
+    <style>
+        body {
+            background-color: #f0e9e4;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .header h1 {
+            color: #4a1d23;
+            font-size: 32px;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Grade de Presentes */
+        .grid-presentes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Cartão de cada presente */
+        .card-presente {
+            background-color: #fff;
+            border: 1px solid #e0d5cb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .card-presente:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Espaço para a foto do item */
+        .foto-item {
+            width: 100%;
+            height: 200px;
+            background-color: #f9f6f3;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .titulo-item {
+            color: #4a1d23;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .valor-item {
+            color: #d4af37;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* O botão mágico */
+        .btn-presentear {
+            display: inline-block;
+            background-color: #4a1d23;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 80%;
+        }
+
+        .btn-presentear:hover {
+            background-color: #5c242c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Lista de Presentes</h1>
+        <p>Como já temos o nosso cantinho montado, preparamos esta lista virtual. Os itens abaixo representam etapas da nossa lua de mel e da construção do nosso futuro. O valor será convertido em dinheiro para usarmos da melhor forma. Muito obrigado pelo carinho!</p>
+    </div>
+
+    <div class="grid-presentes">
+        <!-- Presente 1 -->
+        <div class="card-presente">
+            <!-- Você pode trocar o link do src pela foto real de um microondas depois -->
+            <img src="https://images.unsplash.com/photo-1585223108342-a16f6b5b2e35?w=400&q=80" alt="Micro-ondas" class="foto-item">
+            <h2 class="titulo-item">Micro-ondas de Última Geração</h2>
+            <div class="valor-item">R$ 500,00</div>
+            <!-- Aqui no href você cola o link do Mercado Pago -->
+            <a href="COLE_O_LINK_DE_PAGAMENTO_AQUI" target="_blank" class="btn-presentear">Presentear</a>
+        </div>
+
+        <!-- Presente 2 -->
+        <div class="card-presente">
+            <img src="https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=400&q=80" alt="Jogo de Jantar" class="foto-item">
+            <h2 class="titulo-item">Jogo de Jantar Completo</h2>
+            <div class="valor-item">R$ 250,00</div>
+            <a href="COLE_O_LINK_DE_PAGAMENTO_AQUI" target="_blank" class="btn-presentear">Presentear</a>
+        </div>
+
+        <!-- Presente 3 -->
+        <div class="card-presente">
+            <img src="https://images.unsplash.com/photo-1542314831-c6a4d14d235d?w=400&q=80" alt="Jantar Romântico" class="foto-item">
+            <h2 class="titulo-item">Jantar na Lua de Mel</h2>
+            <div class="valor-item">R$ 150,00</div>
+            <a href="COLE_O_LINK_DE_PAGAMENTO_AQUI" target="_blank" class="btn-presentear">Presentear</a>
+        </div>
+    </div>
+
+</body>
+</html>
