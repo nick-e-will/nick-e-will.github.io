@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite - N & W</title>
+    <style>
+        body {
+            background-color: #f4ece4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+        }
+
+        /* Oculta o checkbox usado para o clique */
+        #open-envelope {
+            display: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #722F37; /* Marsala */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 3;
+            border-right: 160px solid transparent;
+            border-left: 160px solid transparent;
+            border-bottom: 110px solid #5e262d; 
+            bottom: 0;
+        }
+
+        .front-left {
+            position: absolute;
+            width: 0; height: 0; z-index: 3;
+            border-top: 110px solid transparent;
+            border-bottom: 110px solid transparent;
+            border-left: 160px solid #853740;
+            left: 0;
+        }
+
+        .front-right {
+            position: absolute;
+            width: 0; height: 0; z-index: 3;
+            border-top: 110px solid transparent;
+            border-bottom: 110px solid transparent;
+            border-right: 160px solid #853740;
+            right: 0;
+        }
+
+        .flap {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 4;
+            border-right: 160px solid transparent;
+            border-left: 160px solid transparent;
+            border-top: 130px solid #4a1d23;
+            top: 0;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out, z-index 0.2s;
+        }
+
+        .card {
+            position: absolute;
+            background: #ffffff;
+            width: 280px;
+            height: 190px;
+            top: 15px;
+            left: 20px;
+            z-index: 2;
+            transition: transform 0.8s ease-in-out;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #d4af37;
+        }
+
+        .card h1 {
+            color: #722F37;
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+
+        .seal {
+            position: absolute;
+            top: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #4a1d23;
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #d4af37; /* Dourado */
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            transition: opacity 0.3s;
+        }
+
+        /* Animação disparada pelo clique no selo */
+        #open-envelope:checked ~ .envelope .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        #open-envelope:checked ~ .envelope .seal {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #open-envelope:checked ~ .envelope .card {
+            transform: translateY(-130px);
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-wrapper">
+        <!-- Checkbox que controla a ação de clique via CSS -->
+        <input type="checkbox" id="open-envelope">
+        
+        <div class="envelope">
+            <label for="open-envelope" class="seal">N&W</label>
+            <div class="flap"></div>
+            <div class="front-left"></div>
+            <div class="front-right"></div>
+            <div class="front"></div>
+            
+            <div class="card">
+                <h1>N & W</h1>
+                <p>Com muita alegria, convidamos você para celebrar conosco o nosso casamento.</p>
+                <p><strong>2028 | Aracaju - SE</strong></p>
+                <p style="font-size: 11px; margin-top: 15px; color: #999;">(Toque no selo para fechar)</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
