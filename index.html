@@ -4,210 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convite - N & W</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f7f3f0;
+            background-color: #f0e9e4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Georgia', serif;
             overflow: hidden;
         }
 
         .envelope-wrapper {
             position: relative;
-            width: 340px;
-            height: 230px;
+            width: 350px;
+            height: 240px;
         }
 
-        /* Checkbox oculto para o clique */
+        /* Esconde o controle do clique */
         #open-envelope {
             display: none;
         }
 
+        /* Fundo do envelope (parte de dentro) */
         .envelope {
             position: relative;
             width: 100%;
             height: 100%;
-            background-color: #4a0d0e; /* Fundo interno mais escuro para dar profundidade */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
+            background-color: #260c11; /* Interior bem escuro */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-radius: 4px;
         }
 
-        /* ----- CARTÃO DO CONVITE ----- */
+        /* Cartão do convite */
         .card {
             position: absolute;
-            background: #fffdfa;
-            width: 300px;
-            height: 200px;
+            background: #ffffff;
+            width: 310px;
+            height: 210px;
             top: 15px;
             left: 20px;
-            z-index: 2;
-            transition: transform 0.8s ease-in-out;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 2; /* Fica atrás das abas da frente */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             padding: 25px 20px;
             box-sizing: border-box;
-            border: 1px solid #e3d3c8;
+            border: 1px solid #d4af37;
+            border-radius: 2px;
         }
 
         .card h1 {
-            color: #661213;
+            color: #4a1d23;
             font-size: 28px;
-            margin-bottom: 5px;
-            margin-top: 0;
-            font-weight: 600;
+            margin-bottom: 10px;
+            font-style: italic;
+            letter-spacing: 2px;
         }
 
         .card p {
             color: #555;
             font-size: 14px;
             line-height: 1.6;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
-        .card .date {
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: #8c7b70;
-            margin-top: 20px;
-            text-transform: uppercase;
-        }
-
-        /* ----- ABAS DO ENVELOPE ----- */
-        .front-bottom {
-            position: absolute;
-            width: 0; height: 0; z-index: 3;
-            border-left: 170px solid transparent;
-            border-right: 170px solid transparent;
-            border-bottom: 125px solid #661213; /* O tom Marsala escolhido */
-            bottom: 0;
-        }
-
+        /* Abas frontais usando clip-path para recortes perfeitos */
         .front-left {
             position: absolute;
-            width: 0; height: 0; z-index: 4;
-            border-top: 115px solid transparent;
-            border-bottom: 115px solid transparent;
-            border-left: 170px solid #731718; /* Marsala levemente mais claro para sombra */
-            left: 0;
+            inset: 0;
+            background: #3e161c; 
+            clip-path: polygon(0 0, 55% 50%, 0 100%);
+            z-index: 3;
         }
 
         .front-right {
             position: absolute;
-            width: 0; height: 0; z-index: 4;
-            border-top: 115px solid transparent;
-            border-bottom: 115px solid transparent;
-            border-right: 170px solid #731718;
-            right: 0;
+            inset: 0;
+            background: #3e161c; 
+            clip-path: polygon(100% 0, 45% 50%, 100% 100%);
+            z-index: 3;
         }
 
+        .front-bottom {
+            position: absolute;
+            inset: 0;
+            background: #4a1d23; /* Marsala Principal */
+            clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+            z-index: 3;
+        }
+
+        /* Aba superior (A que abre) */
         .flap {
             position: absolute;
-            width: 0; height: 0; z-index: 5;
-            border-left: 170px solid transparent;
-            border-right: 170px solid transparent;
-            border-top: 135px solid #7a1b1c; /* Aba superior */
-            top: 0;
+            inset: 0;
+            background: #5c242c; /* Marsala mais claro para dar contraste */
+            clip-path: polygon(0 0, 100% 0, 50% 55%);
+            z-index: 4;
             transform-origin: top;
-            transition: transform 0.6s ease-in-out, z-index 0.2s;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ----- DECORAÇÕES EXTERNAS (Laço, Flores e Lacre) ----- */
-        .decorations {
+        /* Fita Cinza Claro */
+        .ribbon {
             position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 80px; /* Posição vertical à esquerda */
+            width: 32px;
+            background: linear-gradient(to right, #dcdcdc, #f5f5f5, #dcdcdc); /* Efeito de brilho na fita */
+            z-index: 5;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3), -1px 0 3px rgba(0,0,0,0.1);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+
+        /* Elemento decorativo das Flores Secas (SVG) */
+        .flowers {
+            position: absolute;
+            top: 80px;
+            left: 55px; /* Alinhado próximo à fita */
+            width: 70px;
+            height: 100px;
+            z-index: 5;
+            transition: opacity 0.4s, transform 0.4s;
+            pointer-events: none;
+        }
+
+        .flowers svg {
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 6;
-            transition: opacity 0.4s ease;
-        }
-
-        /* Fita Horizontal */
-        .ribbon-band {
-            position: absolute;
-            width: 100%;
-            height: 22px;
-            top: 115px;
-            background: linear-gradient(to bottom, #d3d3d3, #f5f5f5, #d3d3d3);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        }
-
-        /* Ponta da fita caída (Direita) */
-        .ribbon-tail {
-            position: absolute;
-            width: 20px;
-            height: 70px;
-            background: linear-gradient(to right, #d3d3d3, #ebebeb);
-            top: 115px;
-            left: 55%;
-            transform: rotate(-15deg);
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
-        }
-
-        /* Flores Secas (Desenhadas em SVG puro para não pesar) */
-        .dried-flowers {
-            position: absolute;
-            top: 30px;
-            left: 45%;
-            width: 60px;
-            height: 100px;
-            transform: rotate(15deg);
-            pointer-events: none;
+            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.4));
         }
 
         /* Lacre de Cera */
         .seal {
             position: absolute;
-            top: 98px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            background: #4f0a0c;
+            top: 130px;
+            left: 96px; /* Centralizado exatamente em cima da fita */
+            transform: translate(-50%, -50%);
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 30% 30%, #72222a, #3b0e14);
             border-radius: 50%;
+            z-index: 6;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #d4af37; /* Dourado envelhecido */
+            color: #d4af37;
+            font-family: 'Georgia', serif;
             font-size: 20px;
+            font-style: italic;
             cursor: pointer;
-            box-shadow: 
-                inset 0 0 6px #2b0304, 
-                0 5px 10px rgba(0,0,0,0.3);
-            border: 2px solid #631214;
-        }
-        
-        .seal::before {
-            content: '';
-            position: absolute;
-            width: 52px;
-            height: 52px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 50%;
+            box-shadow: 0 5px 8px rgba(0,0,0,0.5), inset 0 0 4px rgba(255,255,255,0.2);
+            transition: opacity 0.4s, transform 0.4s;
         }
 
-        /* ----- A ANIMAÇÃO MÁGICA AO CLICAR ----- */
+        /* AÇÕES DE ANIMAÇÃO AO CLICAR */
+        
+        /* 1. Abre a aba */
         #open-envelope:checked ~ .envelope .flap {
             transform: rotateX(180deg);
-            z-index: 1;
+            z-index: 1; /* Vai para trás do cartão após abrir */
         }
 
-        #open-envelope:checked ~ .decorations {
+        /* 2. Desfaz a fita, flores e o lacre suavemente */
+        #open-envelope:checked ~ .envelope .ribbon,
+        #open-envelope:checked ~ .envelope .flowers,
+        #open-envelope:checked ~ .envelope .seal {
             opacity: 0;
+            transform: translateY(-20px) scale(0.9); /* O lacre levanta e some */
             pointer-events: none;
         }
 
+        /* 3. Desliza o cartão para fora */
         #open-envelope:checked ~ .envelope .card {
-            transform: translateY(-160px);
-            z-index: 5;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+            transform: translateY(-130px);
         }
     </style>
 </head>
@@ -217,42 +188,38 @@
         <input type="checkbox" id="open-envelope">
         
         <div class="envelope">
-            <div class="flap"></div>
             <div class="front-left"></div>
             <div class="front-right"></div>
             <div class="front-bottom"></div>
+            <div class="flap"></div>
+
+            <!-- Fita e Flores -->
+            <div class="ribbon"></div>
             
+            <div class="flowers">
+                <!-- Ramo botânico em SVG desenhado via código -->
+                <svg viewBox="0 0 100 150" fill="none" stroke="#bda077" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M50,140 Q40,90 60,30" />
+                    <path d="M54,105 Q70,95 80,75" />
+                    <path d="M47,75 Q30,65 20,45" />
+                    <path d="M57,55 Q75,45 85,25" />
+                    <circle cx="80" cy="75" r="4" fill="#8c7353" stroke="none" />
+                    <circle cx="20" cy="45" r="3.5" fill="#8c7353" stroke="none" />
+                    <circle cx="85" cy="25" r="4" fill="#8c7353" stroke="none" />
+                    <circle cx="60" cy="30" r="4.5" fill="#8c7353" stroke="none" />
+                </svg>
+            </div>
+
+            <!-- Lacre clicável -->
+            <label for="open-envelope" class="seal">N&W</label>
+            
+            <!-- Convite Interno -->
             <div class="card">
                 <h1>N & W</h1>
                 <p>Com a bênção de Deus e de seus pais, convidam para a celebração de seu casamento.</p>
-                <div class="date">2028 | Aracaju - SE</div>
+                <p><strong>2027 | Aracaju - SE</strong></p>
+                <p style="font-size: 10px; margin-top: 15px; color: #999;">(Toque no lacre novamente para fechar)</p>
             </div>
-        </div>
-
-        <div class="decorations">
-            <div class="ribbon-band"></div>
-            <div class="ribbon-tail"></div>
-            
-            <!-- SVG das Flores Secas -->
-            <svg class="dried-flowers" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- Ramo 1 (Eucalipto seco) -->
-                <path d="M30,90 Q40,60 20,10" stroke="#8c8270" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <path d="M26,60 Q15,55 12,45" stroke="#8c8270" stroke-width="1.5" fill="none"/>
-                <circle cx="12" cy="45" r="3" fill="#aba18e"/>
-                <circle cx="20" cy="10" r="3" fill="#aba18e"/>
-                <circle cx="25" cy="30" r="3" fill="#aba18e"/>
-                
-                <!-- Ramo 2 (Flores tom pastel) -->
-                <path d="M30,90 Q20,50 45,15" stroke="#9e917d" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <path d="M28,65 Q38,60 42,50" stroke="#9e917d" stroke-width="1.5" fill="none"/>
-                <circle cx="45" cy="15" r="4" fill="#e6dbd1"/>
-                <circle cx="42" cy="50" r="3.5" fill="#d9cdbf"/>
-                <circle cx="35" cy="35" r="3" fill="#e6dbd1"/>
-            </svg>
-            
-            <label for="open-envelope" class="seal">
-                N&W
-            </label>
         </div>
     </div>
 
