@@ -308,6 +308,41 @@
     transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
+  /* ============ Botão de Localização (Circular do Meio) ============ */
+  .location-btn {
+    position: absolute;
+    /* Mesma altura do botão anterior */
+    top: 63.5%; 
+    /* Posicionado bem no centro */
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 42px; 
+    height: 42px;
+    background-color: #691621;
+    border-radius: 50%;
+    text-decoration: none;
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .location-btn:hover {
+    background-color: var(--rose-bright);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
+  }
+
+  .location-btn svg {
+    width: 20px;
+    height: 20px;
+  }
   /* Efeito interativo quando passar o mouse por cima */
   .rsvp-btn:hover {
     background-color: var(--rose-bright);
@@ -404,6 +439,12 @@
           <a href="https://wa.me/5574999518878?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          <!-- NOVO: Botão de Localização (Rota da Igreja para a Recepção) -->
+          <a href="https://www.google.com/maps/dir/?api=1&origin=Paróquia+Santa+Lúcia,+Jabotiana,+Aracaju+-+SE&destination=Feast+House,+Jabotiana,+Aracaju+-+SE" target="_blank" class="location-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
             </svg>
           </a>
         </div>
