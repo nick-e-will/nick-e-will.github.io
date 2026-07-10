@@ -168,14 +168,16 @@
     background:rgba(0,0,0,0.06);
   }
 
-  /* dried baby's-breath sprigs peeking from behind the seal, tucked with the ribbon ends */
+  /* single dried flower sprig, tucked diagonally behind the seal */
   .sprig{
     position:absolute;
     top:50%; left:50%;
-    width:220px; height:220px;
-    margin:-150px 0 0 -110px;
+    width:190px; height:310px;
+    margin:-230px 0 0 -70px;
     z-index:6;
     pointer-events:none;
+    transform:rotate(-32deg);
+    transform-origin:70% 85%;
     transition:opacity 0.4s, transform 0.4s;
   }
   .sprig img{
@@ -184,8 +186,6 @@
     object-fit:contain;
     filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35));
   }
-  .sprig.left{ transform:translateX(-16px) rotate(-8deg); }
-  .sprig.right{ transform:translateX(16px) rotate(8deg); }
 
   .seal{
     position:absolute;
@@ -286,14 +286,9 @@
     transform:translateY(-40px);
     pointer-events:none;
   }
-  #open-envelope:checked ~ .envelope .sprig.left{
+  #open-envelope:checked ~ .envelope .sprig{
     opacity:0;
-    transform:translateX(-38px) rotate(-14deg) translateY(-30px);
-    pointer-events:none;
-  }
-  #open-envelope:checked ~ .envelope .sprig.right{
-    opacity:0;
-    transform:translateX(38px) rotate(14deg) scaleX(-1) translateY(-30px);
+    transform:rotate(-32deg) translateY(-30px);
     pointer-events:none;
   }
   #open-envelope:checked ~ .envelope .seal{
@@ -341,10 +336,10 @@
 
         <div class="ribbon"></div>
 
-        <div class="sprig left">
-          <img src="sprig-left.png" alt="">
+        <div class="sprig">
+          <img src="sprig-single.png" alt="">
         </div>
-        
+
         <label for="open-envelope" class="seal">
           <img src="seal-monogram-gold.png" alt="N&amp;W">
         </label>
