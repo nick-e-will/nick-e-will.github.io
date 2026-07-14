@@ -227,50 +227,25 @@
     filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));
   }
 
-/* Oculta o checkbox do controle do verso */
-  #flip-card { display: none; }
-
-  /* ============ CARD & EFEITO 3D ============ */
+  /* ============ CARD (interior) — contains the actual invitation image ============ */
   .card{
     position:absolute;
     width:560px;
     top:14px;
     left:40px;
-    z-index:2; 
-    background:transparent; /* A cor de fundo vai para as faces agora */
-    border-radius:2px;
-    box-shadow:0 30px 60px rgba(20,3,7,0.4);
-    perspective:1500px; /* Cria a profundidade 3D */
-    transition:transform 0.9s cubic-bezier(.4,0,.2,1), box-shadow 0.9s;
-  }
-
-  .card-inner {
-    position:relative;
-    width:100%;
-    transition:transform 0.8s cubic-bezier(.4,0,.2,1);
-    transform-style:preserve-3d; /* Mantém a frente e o verso nas posições corretas durante o giro */
-  }
-
-  .card-front, .card-back {
-    position:relative; 
-    width:100%;
+    z-index:2;
     background:var(--paper);
     border:1px solid var(--gold);
     outline:1px solid rgba(200,161,90,0.35);
     outline-offset:4px;
     border-radius:2px;
+    box-shadow:0 30px 60px rgba(20,3,7,0.4);
     overflow:hidden;
-    backface-visibility:hidden; /* Esconde o espelho da imagem quando ela está de costas */
     line-height:0;
+    transition:transform 0.9s cubic-bezier(.4,0,.2,1), box-shadow 0.9s;
   }
 
-  .card-back {
-    position:absolute; /* O verso é esticado sobre a frente */
-    top:0; left:0; height:100%;
-    transform:rotateY(180deg); /* Já começa virado para trás */
-  }
-
-  .card-front img, .card-back img {
+  .card img{
     display:block;
     width:100%;
     height:auto;
@@ -302,84 +277,158 @@
     transition:opacity 0.5s ease 0.3s, transform 0.3s ease;
     white-space:nowrap;
   }
+  
   .close-btn:hover{
     transform:translateY(-2px);
     box-shadow:0 6px 14px rgba(20,3,7,0.4);
   }
-  .close-btn svg{width:12px; height:12px;}
-
-  /* ============ NOVO: Botões Verso / Frente ============ */
-  .flip-btn {
-    position:absolute;
-    top:15px;
-    right:15px; /* Canto superior direito na frente */
-    z-index:10;
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 14px;
-    font-size:13px;
-    letter-spacing:1px;
-    background:linear-gradient(135deg, var(--wine-2), var(--wine-dark));
-    color:var(--gold-light);
-    border:1px solid var(--gold);
-    border-radius:30px;
-    font-family:'Cormorant Garamond', serif;
-    text-transform:uppercase;
-    text-decoration:none;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(20,3,7,0.3);
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.5s ease 0.3s, transform 0.3s ease;
-    white-space:nowrap;
-  }
-  .flip-btn:hover {
-    transform:translateY(-2px);
-    box-shadow:0 6px 14px rgba(20,3,7,0.4);
-  }
-  .flip-btn svg { width:12px; height:12px; }
-
-  /* =========== OS SEUS OUTROS BOTÕES INTERATIVOS =========== */
-  .rsvp-btn { position: absolute; top: 63.5%; left: 39.5%; transform: translate(-50%, -50%); z-index: 10; display: flex; justify-content: center; align-items: center; width: 42px; height: 42px; background-color: #691621; border-radius: 50%; text-decoration: none; opacity: 0; pointer-events: none; transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
-  .rsvp-btn:hover { background-color: var(--rose-bright); transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4); }
-  .rsvp-btn svg { width: 20px; height: 20px; }
-
-  .location-btn { position: absolute; top: 63.5%; left: 50%; transform: translate(-50%, -50%); z-index: 10; display: flex; justify-content: center; align-items: center; width: 42px; height: 42px; background-color: #691621; border-radius: 50%; text-decoration: none; opacity: 0; pointer-events: none; transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
-  .location-btn:hover { background-color: var(--rose-bright); transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4); }
-  .location-btn svg { width: 20px; height: 20px; }
-
-  .gift-btn { position: absolute; top: 63.5%; left: 60.5%; transform: translate(-50%, -50%); z-index: 10; display: flex; justify-content: center; align-items: center; width: 42px; height: 42px; background-color: #691621; border-radius: 50%; text-decoration: none; opacity: 0; pointer-events: none; transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
-  .gift-btn:hover { background-color: var(--rose-bright); transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4); }
-  .gift-btn svg { width: 20px; height: 20px; }
   
+  .close-btn svg{
+    width:12px; 
+    height:12px;
+  }
+
+/* ============ Botão de Confirmar Presença (Circular) ============ */
+  .rsvp-btn {
+    position: absolute;
+    /* Posição baseada nas proporções da imagem convite (1).jpg */
+    top: 63.5%; 
+    left: 39.5%; 
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Tamanho do círculo para cobrir a imagem de fundo perfeitamente */
+    width: 42px; 
+    height: 42px;
+    background-color: #691621; /* Cor equivalente ao círculo da sua imagem */
+    border-radius: 50%;
+    text-decoration: none;
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* ============ Botão de Localização (Circular do Meio) ============ */
+   .location-btn {
+    position: absolute;
+    /* Mesma altura do botão anterior */
+    top: 63.5%; 
+    /* Posicionado bem no centro */
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 42px; 
+    height: 42px;
+    background-color: #691621;
+    border-radius: 50%;
+    text-decoration: none;
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .location-btn:hover {
+    background-color: var(--rose-bright);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
+  }
+
+  .location-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  /* ============ Botão de Presentes (Circular da Direita) ============ */
+  .gift-btn {
+    position: absolute;
+    top: 63.5%; 
+    /* Posicionado simetricamente à direita */
+    left: 60.5%; 
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 42px; 
+    height: 42px;
+    background-color: #691621;
+    border-radius: 50%;
+    text-decoration: none;
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .gift-btn:hover {
+    background-color: var(--rose-bright);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
+  }
+
+  .gift-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  /* Efeito interativo quando passar o mouse por cima */
+  .rsvp-btn:hover {
+    background-color: var(--rose-bright);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
+  }
+
+  .rsvp-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
   /* ============ open state ============ */
-  #open-envelope:checked ~ .envelope .flap{ transform:rotateX(180deg); z-index:1; }
-  #open-envelope:checked ~ .envelope .ribbon{ opacity:0; transform:translateY(-40px); pointer-events:none; }
-  #open-envelope:checked ~ .envelope .sprig{ opacity:0; transform:rotate(-32deg) translateY(-30px); pointer-events:none; }
-  #open-envelope:checked ~ .envelope .seal{ opacity:0; transform:translate(-50%,-90px) scale(0.9); pointer-events:none; }
-  
+  #open-envelope:checked ~ .envelope .flap{
+    transform:rotateX(180deg);
+    z-index:1;
+  }
+  #open-envelope:checked ~ .envelope .ribbon{
+    opacity:0;
+    transform:translateY(-40px);
+    pointer-events:none;
+  }
+  #open-envelope:checked ~ .envelope .sprig{
+    opacity:0;
+    transform:rotate(-32deg) translateY(-30px);
+    pointer-events:none;
+  }
+  #open-envelope:checked ~ .envelope .seal{
+    opacity:0;
+    transform:translate(-50%,-90px) scale(0.9);
+    pointer-events:none;
+  }
   #open-envelope:checked ~ .envelope .card{
     transform:translateY(-330px) scale(1.03);
     box-shadow:0 55px 90px rgba(20,3,7,0.5);
   }
-
-  /* Os botões aparecem com o convite aberto */
   #open-envelope:checked ~ .envelope .close-btn,
-  #open-envelope:checked ~ .envelope .flip-btn,
   #open-envelope:checked ~ .envelope .rsvp-btn,
   #open-envelope:checked ~ .envelope .location-btn,
   #open-envelope:checked ~ .envelope .gift-btn {
     opacity:1;
     pointer-events:auto;
   }
-
-  /* ======= A MÁGICA DO GIRO 180° ======= */
-  #flip-card:checked ~ .envelope .card .card-inner {
-    transform: rotateY(180deg);
+  #open-envelope:checked ~ .hint{
+    opacity:0;
   }
 
-  #open-envelope:checked ~ .hint{ opacity:0; }
 .scale-container{
     transform:scale(1);
     /* Cria o espaço no topo dinamicamente garantindo que a carta caiba na tela */
@@ -410,95 +459,66 @@
 </head>
 <body>
 
-<div class="envelope-wrapper">
+  <div class="scale-container">
+    <div class="envelope-wrapper">
       <input type="checkbox" id="open-envelope">
-      
-      <!-- NOVO: Controle que faz o cartão girar -->
-      <input type="checkbox" id="flip-card">
 
       <div class="envelope">
         <div class="foil-frame"></div>
         <div class="front-left"></div>
         <div class="front-right"></div>
         <div class="front-bottom"></div>
+
         <div class="flap"></div>
+
         <div class="ribbon"></div>
+
         <div class="sprig">
           <img src="sprig-single.png" alt="">
         </div>
+
         <label for="open-envelope" class="seal">
           <img src="seal-monogram-gold.png" alt="N&amp;W">
         </label>
 
-        <!-- ======= INTERIOR CARD (Frente e Verso) ======= -->
+        <!-- ======= INTERIOR CARD ======= -->
         <div class="card">
-          <div class="card-inner">
+          <label for="open-envelope" class="close-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Fechar
+          </label>
 
-            <!-- FRENTE DO CONVITE -->
-            <div class="card-front">
-              <!-- Botão de Fechar -->
-              <label for="open-envelope" class="close-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Fechar
-              </label>
+          <img src="convite.jpg" alt="Convite de casamento de Nicole e Willamis">
 
-              <!-- NOVO: Botão de Virar para o Verso -->
-              <label for="flip-card" class="flip-btn">
-                Verso
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </label>
-
-              <img src="convite.jpg" alt="Convite de casamento de Nicole e Willamis">
-
-              <!-- Botão de WhatsApp -->
-              <a href="https://wa.me/5500000000000?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </a>
-
-              <!-- Botão de Localização -->
-              <a href="https://www.google.com/maps/dir/?api=1&origin=Paróquia+Santa+Lúcia,+Jabotiana,+Aracaju+-+SE&destination=Feast+House,+Jabotiana,+Aracaju+-+SE" target="_blank" class="location-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-              </a>
-
-              <!-- Botão da Lista de Presentes -->
-              <a href="#" target="_blank" class="gift-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                  <rect x="2" y="7" width="20" height="5"></rect>
-                  <line x1="12" y1="22" x2="12" y2="7"></line>
-                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                </svg>
-              </a>
-            </div>
-
-            <!-- VERSO DO CONVITE (Orientações) -->
-            <div class="card-back">
-              <!-- Botão de Voltar para a Frente -->
-              <label for="flip-card" class="flip-btn" style="right: auto; left: 15px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-                Frente
-              </label>
-
-              <!-- A imagem com o verso fornecida por você -->
-              <img src="Teste (1).jpg" alt="Orientações do Casamento">
-            </div>
-
-          </div>
+          <!-- NOVO: Botão de WhatsApp Circular -->
+          <a href="https://wa.me/5574999518878?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          <!-- NOVO: Botão de Localização (Rota da Igreja para a Recepção) -->
+          <a href="https://www.google.com/maps/dir/?api=1&origin=Paróquia+Santa+Lúcia,+Jabotiana,+Aracaju+-+SE&destination=Feast+House,+Jabotiana,+Aracaju+-+SE" target="_blank" class="location-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          <!-- NOVO: Botão da Lista de Presentes (Direita) -->
+          <!-- Substitua o "#" pelo link do seu site de casamento (ex: casar.com/nicoleewillamis) -->
+          <a href="#" target="_blank" class="gift-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"></polyline>
+              <rect x="2" y="7" width="20" height="5"></rect>
+              <line x1="12" y1="22" x2="12" y2="7"></line>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+            </svg>
+          </a>
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
   <div class="hint">Toque no lacre para abrir</div>
 
