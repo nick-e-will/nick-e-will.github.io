@@ -31,25 +31,30 @@
     min-height:100vh;
     display:flex;
     justify-content:center;
-    align-items:center;
+    /* Trocamos "center" por "flex-start" para o navegador não cortar a parte de cima */
+    align-items:flex-start; 
     background:
       radial-gradient(circle at 50% 20%, #fbf6f0 0%, var(--cream) 55%, #ece1d5 100%);
     font-family:'Cormorant Garamond', serif;
-    overflow:hidden;
+    /* Liberamos a barra de rolagem! */
+    overflow-y:auto; 
+    overflow-x:hidden;
     position:relative;
   }
-
-  /* soft ambient vignette */
+/* soft ambient vignette */
   body::before{
     content:"";
-    position:absolute;
+    /* Fixamos o fundo para acompanhar a rolagem da tela naturalmente */
+    position:fixed;
     inset:0;
     background:radial-gradient(ellipse at center, transparent 55%, rgba(51,7,15,0.12) 100%);
     pointer-events:none;
+    z-index: 0;
   }
 
-  .hint{
-    position:absolute;
+    .hint{
+    /* Trocamos absolute por fixed para flutuar visível na tela */
+    position:fixed;
     bottom:34px;
     left:50%;
     transform:translateX(-50%);
@@ -61,6 +66,7 @@
     opacity:0.55;
     animation:pulseHint 2.6s ease-in-out infinite;
     transition:opacity 0.4s;
+    z-index:100;
   }
   @keyframes pulseHint{
     0%,100%{opacity:0.35;}
@@ -423,15 +429,31 @@
     opacity:0;
   }
 
+.scale-container{
+    transform:scale(1);
+    /* Cria o espaço no topo dinamicamente garantindo que a carta caiba na tela */
+    margin-top: clamp(340px, 40vh, 500px);
+    margin-bottom: 200px;
+  }
+
   /* ============ responsive ============ */
   @media (max-width:900px){
-    .scale-container{transform:scale(0.72);}
+    .scale-container{
+      transform:scale(0.72);
+      margin-top: clamp(250px, 35vh, 400px);
+    }
   }
   @media (max-width:640px){
-    .scale-container{transform:scale(0.5);}
+    .scale-container{
+      transform:scale(0.5);
+      margin-top: clamp(180px, 25vh, 300px);
+    }
   }
   @media (max-width:420px){
-    .scale-container{transform:scale(0.4);}
+    .scale-container{
+      transform:scale(0.4);
+      margin-top: clamp(140px, 20vh, 250px);
+    }
   }
 </style>
 </head>
