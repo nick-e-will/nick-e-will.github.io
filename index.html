@@ -167,9 +167,7 @@
   left:50%;
   width:64px;
   margin-left:-32px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='430' viewBox='0 0 64 430'%3E%3ClinearGradient id='ribbonGrad' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23c9c9c9'/%3E%3Cstop offset='30%25' stop-color='%23f2f2f2'/%3E%3Cstop offset='50%25' stop-color='%23ffffff'/%3E%3Cstop offset='70%25' stop-color='%23f2f2f2'/%3E%3Cstop offset='100%25' stop-color='%23c9c9c9'/%3E%3C/linearGradient%3E%3Crect width='64' height='430' fill='url(%23ribbonGrad)'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  overflow:hidden;
   box-shadow:3px 0 10px rgba(0,0,0,0.28), -3px 0 8px rgba(0,0,0,0.12);
   z-index:6;
   transition:opacity 0.4s, transform 0.4s;
@@ -478,7 +476,20 @@
 
         <div class="flap"></div>
 
-        <div class="ribbon"></div>
+        <div class="ribbon">
+         <svg viewBox="0 0 64 430" preserveAspectRatio="none" width="100%" height="100%" style="display:block;">
+           <defs>
+             <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
+               <stop offset="0%" stop-color="#c9c9c9"/>
+               <stop offset="30%" stop-color="#f2f2f2"/>
+               <stop offset="50%" stop-color="#ffffff"/>
+               <stop offset="70%" stop-color="#f2f2f2"/>
+               <stop offset="100%" stop-color="#c9c9c9"/>
+             </linearGradient>
+           </defs>
+           <rect width="64" height="430" fill="url(#ribbonGrad)"/>
+         </svg>
+       </div>
 
         <div class="sprig">
           <img src="sprig-single.png" alt="">
