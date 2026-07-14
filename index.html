@@ -31,20 +31,18 @@
     min-height:100vh;
     display:flex;
     justify-content:center;
-    /* Trocamos "center" por "flex-start" para o navegador não cortar a parte de cima */
     align-items:flex-start; 
     background:
       radial-gradient(circle at 50% 20%, #fbf6f0 0%, var(--cream) 55%, #ece1d5 100%);
     font-family:'Cormorant Garamond', serif;
-    /* Liberamos a barra de rolagem! */
     overflow-y:auto; 
     overflow-x:hidden;
     position:relative;
   }
-/* soft ambient vignette */
+  
+  /* soft ambient vignette */
   body::before{
     content:"";
-    /* Fixamos o fundo para acompanhar a rolagem da tela naturalmente */
     position:fixed;
     inset:0;
     background:radial-gradient(ellipse at center, transparent 55%, rgba(51,7,15,0.12) 100%);
@@ -52,8 +50,7 @@
     z-index: 0;
   }
 
-    .hint{
-    /* Trocamos absolute por fixed para flutuar visível na tela */
+  .hint{
     position:fixed;
     bottom:34px;
     left:50%;
@@ -73,7 +70,11 @@
     50%{opacity:0.75;}
   }
 
-  .scale-container{transform:scale(1);}
+  .scale-container{
+    transform:scale(1);
+    margin-top: clamp(340px, 40vh, 500px);
+    margin-bottom: 200px;
+  }
 
   .envelope-wrapper{
     position:relative;
@@ -81,7 +82,7 @@
     height:430px;
   }
 
-  #open-envelope{display:none;}
+  #open-envelope, #flip-card {display:none;}
 
   /* ============ ENVELOPE ============ */
   .envelope{
@@ -173,14 +174,11 @@
     background:rgba(0,0,0,0.06);
   }
 
-  /* single dried flower sprig, tucked diagonally behind the seal */
   .sprig{
     position:absolute;
     top:53%; left:47%;
-    /* Tamanho reduzido */
     width: 130px; 
     height: 210px;
-    /* Margem ajustada */
     margin: -155px 0 0 -45px;
     z-index:6;
     pointer-events:none;
@@ -227,28 +225,68 @@
     filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));
   }
 
-  /* ============ CARD (interior) — contains the actual invitation image ============ */
-  .card{
-    position:absolute;
-    width:560px;
-    top:14px;
-    left:40px;
-    z-index:2;
-    background:var(--paper);
-    border:1px solid var(--gold);
-    outline:1px solid rgba(200,161,90,0.35);
-    outline-offset:4px;
-    border-radius:2px;
-    box-shadow:0 30px 60px rgba(20,3,7,0.4);
-    overflow:hidden;
-    line-height:0;
-    transition:transform 0.9s cubic-bezier(.4,0,.2,1), box-shadow 0.9s;
+  /* ============ CARD (container 3D) ============ */
+  .card {
+    position: absolute;
+    width: 560px;
+    top: 14px;
+    left: 40px;
+    z-index: 2;
+    line-height: 0;
+    transition: transform 0.9s cubic-bezier(.4,0,.2,1);
+    perspective: 1500px; /* Cria o espaço 3D para o efeito de virar */
   }
 
-  .card img{
-    display:block;
-    width:100%;
-    height:auto;
+  /* Miolo do cartão que vai rotacionar */
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(.4,0,.2,1);
+    transform-style: preserve-3d;
+    box-shadow: 0 30px 60px rgba(20,3,7,0.4);
+    border-radius: 2px;
+  }
+
+  /* Faces do papel (frente e verso) */
+  .card-front, .card-back {
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--paper);
+    border: 1px solid var(--gold);
+    outline: 1px solid rgba(200,161,90,0.35);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .card-front {
+    z-index: 2;
+    transform: rotateY(0deg); 
+  }
+
+  .card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: rotateY(180deg); /* Já começa virado de costas */
+  }
+
+  .card-front img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  .card-back img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
   }
 
   /* ============ close/back button ============ */
@@ -288,111 +326,66 @@
     height:12px;
   }
 
-/* ============ Botão de Confirmar Presença (Circular) ============ */
-  .rsvp-btn {
+  /* ============ Botão de Virar o Cartão ============ */
+  .flip-btn {
     position: absolute;
-    /* Posição baseada nas proporções da imagem convite (1).jpg */
-    top: 63.5%; 
-    left: 39.5%; 
-    transform: translate(-50%, -50%);
+    top: 15px;
+    right: 15px; /* Canto superior direito */
     z-index: 10;
-    
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
-    
-    /* Tamanho do círculo para cobrir a imagem de fundo perfeitamente */
-    width: 42px; 
-    height: 42px;
-    background-color: #691621; /* Cor equivalente ao círculo da sua imagem */
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, var(--wine-2), var(--wine-dark));
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
     border-radius: 50%;
-    text-decoration: none;
-    
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(20,3,7,0.3);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    transition: opacity 0.5s ease 0.3s, transform 0.3s ease, background 0.3s ease;
   }
 
-  /* ============ Botão de Localização (Circular do Meio) ============ */
-   .location-btn {
+  .flip-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(20,3,7,0.4);
+    background: var(--rose-bright);
+  }
+
+  .flip-btn svg { width: 18px; height: 18px; stroke: currentColor; }
+
+  /* ============ Botões Interativos Circulares ============ */
+  .rsvp-btn, .location-btn, .gift-btn {
     position: absolute;
-    /* Mesma altura do botão anterior */
     top: 63.5%; 
-    /* Posicionado bem no centro */
-    left: 50%; 
     transform: translate(-50%, -50%);
     z-index: 10;
-    
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    width: 42px; 
-    height: 42px;
-    background-color: #691621;
-    border-radius: 50%;
-    text-decoration: none;
-    
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .location-btn:hover {
-    background-color: var(--rose-bright);
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
-  }
-
-  .location-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-  /* ============ Botão de Presentes (Circular da Direita) ============ */
-  .gift-btn {
-    position: absolute;
-    top: 63.5%; 
-    /* Posicionado simetricamente à direita */
-    left: 60.5%; 
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
     width: 42px; 
     height: 42px;
     background-color: #691621;
     border-radius: 50%;
     text-decoration: none;
-    
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease 0.3s, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .gift-btn:hover {
+  .rsvp-btn { left: 39.5%; }
+  .location-btn { left: 50%; }
+  .gift-btn { left: 60.5%; }
+
+  .rsvp-btn:hover, .location-btn:hover, .gift-btn:hover {
     background-color: var(--rose-bright);
     transform: translate(-50%, -50%) scale(1.1);
     box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
   }
 
-  .gift-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-  /* Efeito interativo quando passar o mouse por cima */
-  .rsvp-btn:hover {
-    background-color: var(--rose-bright);
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 4px 12px rgba(94, 15, 28, 0.4);
-  }
-
-  .rsvp-btn svg {
-    width: 20px;
-    height: 20px;
-  }
+  .rsvp-btn svg, .location-btn svg, .gift-btn svg { width: 20px; height: 20px; }
 
   /* ============ open state ============ */
   #open-envelope:checked ~ .envelope .flap{
@@ -416,24 +409,26 @@
   }
   #open-envelope:checked ~ .envelope .card{
     transform:translateY(-330px) scale(1.03);
+  }
+  #open-envelope:checked ~ .envelope .card .card-inner{
     box-shadow:0 55px 90px rgba(20,3,7,0.5);
   }
+  
+  /* Ação de virar o cartão quando o flip-card estiver checado */
+  #flip-card:checked ~ .envelope .card .card-inner {
+    transform: rotateY(180deg);
+  }
+
   #open-envelope:checked ~ .envelope .close-btn,
   #open-envelope:checked ~ .envelope .rsvp-btn,
   #open-envelope:checked ~ .envelope .location-btn,
-  #open-envelope:checked ~ .envelope .gift-btn {
+  #open-envelope:checked ~ .envelope .gift-btn,
+  #open-envelope:checked ~ .envelope .flip-btn {
     opacity:1;
     pointer-events:auto;
   }
   #open-envelope:checked ~ .hint{
     opacity:0;
-  }
-
-.scale-container{
-    transform:scale(1);
-    /* Cria o espaço no topo dinamicamente garantindo que a carta caiba na tela */
-    margin-top: clamp(340px, 40vh, 500px);
-    margin-bottom: 200px;
   }
 
   /* ============ responsive ============ */
@@ -461,7 +456,11 @@
 
   <div class="scale-container">
     <div class="envelope-wrapper">
+      
+      <!-- Checkbox de abrir envelope -->
       <input type="checkbox" id="open-envelope">
+      <!-- NOVO: Checkbox para controlar a rotação 3D do papel -->
+      <input type="checkbox" id="flip-card">
 
       <div class="envelope">
         <div class="foil-frame"></div>
@@ -483,38 +482,70 @@
 
         <!-- ======= INTERIOR CARD ======= -->
         <div class="card">
-          <label for="open-envelope" class="close-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-            Fechar
-          </label>
+          <!-- Wrapper 3D -->
+          <div class="card-inner">
+            
+            <!-- FRENTE DO CONVITE -->
+            <div class="card-front">
+              <label for="open-envelope" class="close-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Fechar
+              </label>
 
-          <img src="convite.jpg" alt="Convite de casamento de Nicole e Willamis">
+              <!-- Botão para virar para o verso -->
+              <label for="flip-card" class="flip-btn" title="Ver Orientações">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <polyline points="23 20 23 14 17 14"></polyline>
+                  <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                  <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+              </label>
 
-          <!-- NOVO: Botão de WhatsApp Circular -->
-          <a href="https://wa.me/5574999518878?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          <!-- NOVO: Botão de Localização (Rota da Igreja para a Recepção) -->
-          <a href="https://www.google.com/maps/dir/?api=1&origin=Paróquia+Santa+Lúcia,+Jabotiana,+Aracaju+-+SE&destination=Feast+House,+Jabotiana,+Aracaju+-+SE" target="_blank" class="location-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          <!-- NOVO: Botão da Lista de Presentes (Direita) -->
-          <!-- Substitua o "#" pelo link do seu site de casamento (ex: casar.com/nicoleewillamis) -->
-          <a href="#" target="_blank" class="gift-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 12 20 22 4 22 4 12"></polyline>
-              <rect x="2" y="7" width="20" height="5"></rect>
-              <line x1="12" y1="22" x2="12" y2="7"></line>
-              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-            </svg>
-          </a>
-          </a>
+              <img src="convite.jpg" alt="Convite de casamento de Nicole e Willamis">
+
+              <a href="https://wa.me/5574999518878?text=Olá! Gostaria de confirmar minha presença no casamento de Nicole e Willamis no dia 03.07.2027!" target="_blank" class="rsvp-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </a>
+
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Paróquia+Santa+Lúcia,+Jabotiana,+Aracaju+-+SE&destination=Feast+House,+Jabotiana,+Aracaju+-+SE" target="_blank" class="location-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </a>
+
+              <a href="#" target="_blank" class="gift-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+              </a>
+            </div>
+
+            <!-- VERSO DO CONVITE -->
+            <div class="card-back">
+              <!-- Botão para voltar para a frente -->
+              <label for="flip-card" class="flip-btn" title="Voltar ao Convite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <polyline points="23 20 23 14 17 14"></polyline>
+                  <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                  <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+              </label>
+              
+              <img src="Teste (1).jpg" alt="Orientações do Casamento">
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
